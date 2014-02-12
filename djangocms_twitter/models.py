@@ -28,3 +28,20 @@ class TwitterSearch(CMSPlugin):
 
     def __unicode__(self):
         return self.title
+
+class TwitterListEntries(CMSPlugin):
+    title = models.CharField(_('title'), max_length=75, blank=True)
+    twitter_user = models.CharField(_('twitter user'), max_length=75)
+    twitter_list = models.CharField(_('twitter list'), max_length=75)
+    count = models.PositiveSmallIntegerField(_('count'), default=3,
+                                             help_text=_('Number of entries to display'))
+    twitter_id = models.CharField(_('twitter id'), max_length=75,
+                                 help_text=_(u'See https://twitter.com/widgets on how to obtain one'))
+
+    def __unicode__(self):
+        return self.title
+
+    def list(self):
+        return "%s%s%s" (self.twitter_user, "/", self.twitter_list)
+
+

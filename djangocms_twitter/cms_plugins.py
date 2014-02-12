@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
-from .models import TwitterRecentEntries, TwitterSearch
+from .models import TwitterRecentEntries, TwitterSearch, TwitterListEntries
 
 
 class TwitterRecentEntriesPlugin(CMSPluginBase):
@@ -31,3 +31,17 @@ class TwitterSearchPlugin(CMSPluginBase):
         })
         return context
 plugin_pool.register_plugin(TwitterSearchPlugin)
+
+
+class TwitterListEntriesPlugin(CMSPluginBase):
+    model = TwitterListEntries
+    name = _("Twitter List")
+    render_template = "cms/plugins/twitter_list_timeline.html"
+    
+    def render(self, context, instance, placeholder):
+        context.update({
+            'object': instance,
+        })
+        return context
+    
+plugin_pool.register_plugin(TwitterListEntriesPlugin)

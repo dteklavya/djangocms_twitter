@@ -27,6 +27,17 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('djangocms_twitter', ['TwitterSearch'])
 
+        # Adding model 'TwitterListEntries'
+        db.create_table('cmsplugin_twitterlistentries', (
+            ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=75, blank=True)),
+            ('twitter_user', self.gf('django.db.models.fields.CharField')(max_length=75)),
+            ('twitter_user', self.gf('django.db.models.fields.CharField')(max_length=75)),
+            ('count', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=3)),
+            ('twitter_id', self.gf('django.db.models.fields.CharField')(default='', max_length=75)),
+        ))
+        db.send_create_signal('djangocms_twitter', ['TwitterListEntries'])
+
 
     def backwards(self, orm):
         # Deleting model 'TwitterRecentEntries'
@@ -34,6 +45,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'TwitterSearch'
         db.delete_table('cmsplugin_twittersearch')
+
+        # Deleting model 'TwitterListEntries'
+        db.delete_table('cmsplugin_twitterlistentries')
 
 
     models = {
@@ -72,6 +86,14 @@ class Migration(SchemaMigration):
             'count': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '3'}),
             'query': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '75', 'blank': 'True'})
+        },
+        'djangocms_twitter.twitterlistentries': {
+            'Meta': {'object_name': 'TwitterListEntries', 'db_table': "'cmsplugin_twitterlistentries'", '_ormbases': ['cms.CMSPlugin']},
+            'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
+            'count': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '3'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '75', 'blank': 'True'}),
+            'twitter_user': ('django.db.models.fields.CharField', [], {'max_length': '75'}),
+            'twitter_id': ('django.db.models.fields.CharField', [], {'max_length': '75'})
         }
     }
 
